@@ -1,0 +1,16 @@
+{
+  "f1": 0.547112462006079,
+  "accuracy": 0.7017017017017017,
+  "confusion_matrix": [
+    [
+      521,
+      240
+    ],
+    [
+      58,
+      180
+    ]
+  ],
+  "threshold": 0.51,
+  "model": "TF-IDF + Logistic Regression"
+}
