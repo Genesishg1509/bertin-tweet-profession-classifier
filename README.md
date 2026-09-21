@@ -1,8 +1,8 @@
-# ProfNER Profession-Mention Classifier — BERTIN vs. a TF-IDF Baseline
+# ProfNER Profession-Mention Classifier - BERTIN vs. a TF-IDF Baseline
 
 Does a tweet mention a healthcare profession? This is a binary text classification task from [ProfNER](https://temu.bsc.es/smm4h-spanish), a shared task built around tweets from the COVID-19 pandemic. The dataset ([`luisgasco/profner_classification_master`](https://huggingface.co/datasets/luisgasco/profner_classification_master) on Hugging Face) has 2,786 training tweets, 999 for validation, and 1,001 unlabeled test tweets to predict.
 
-This started as a university NLP exercise. Fine-tuning **BERTIN**, a RoBERTa model pretrained specifically on Spanish, got F1 ≈ 0.88. This repo restructures that work into something reproducible, adds a baseline to check whether the transformer's cost is justified, and fixes a bug in how the decision threshold was applied.
+This started as a university NLP exercise. Fine-tuning **BERTIN**, a RoBERTa model pretrained specifically on Spanish, got F1 = 0.88. This repo restructures that work into something reproducible, adds a baseline to check whether the transformer's cost is justified, and fixes a bug in how the decision threshold was applied.
 
 ## The problem, the technique, and why
 
@@ -21,9 +21,9 @@ BERTIN is a 110M-parameter model that needs a GPU to fine-tune in reasonable tim
 | TF-IDF + Logistic Regression | 0.547 | 0.702 | Seconds, CPU |
 | **BERTIN RoBERTa (fine-tuned)** | **0.878** | **0.942** | ~15 min, GPU |
 
-The gap is large — 33 points of F1. Unlike cases where a simple baseline nearly matches a complex model, here it clearly doesn't. That's a real answer to "is this complexity worth it," and it's yes: the transformer picks up on patterns in how professions are mentioned that a bag-of-words model can't capture.
+The gap is large, 33 points of F1. Unlike cases where a simple baseline nearly matches a complex model, here it clearly doesn't. That's a real answer to "is this complexity worth it," and it's yes: the transformer picks up on patterns in how professions are mentioned that a bag-of-words model can't capture.
 
-*(TF-IDF result reproduced in this environment on 2026-09-14. BERTIN's result is from the original training run — reproducing it requires a GPU, which wasn't available while building this repo. See "Reproducing this" below.)*
+*(TF-IDF result reproduced in this environment on 2026-09-14. BERTIN's result is from the original training run, reproducing it requires a GPU, which wasn't available while building this repo. See "Reproducing this" below.)*
 
 ## A bug in the original notebook
 
@@ -53,10 +53,10 @@ reports/          Metrics as JSON, for anything that reads them programmatically
 ```bash
 pip install -r requirements.txt
 
-python -m src.baseline              # TF-IDF baseline, runs on CPU in seconds
-python -m src.train                 # fine-tunes BERTIN -- needs a GPU (Colab's free tier works)
+python -m src.baseline                   # TF-IDF baseline, runs on CPU in seconds
+python -m src.train                      # fine-tunes BERTIN -- needs a GPU (Colab's free tier works)
 python -m src.predict --threshold 0.42   # generates reports/predicciones_test.tsv
-python app.py                       # local Gradio demo (needs a trained model in models/bertin)
+python app.py                            # local Gradio demo (needs a trained model in models/bertin)
 ```
 
 ## Why BERTIN specifically
