@@ -4,6 +4,14 @@ Does a tweet mention a healthcare profession? This is a binary text classificati
 
 This started as a university NLP exercise. Fine-tuning **BERTIN**, a RoBERTa model pretrained specifically on Spanish, got F1 ≈ 0.88. This repo restructures that work into something reproducible, adds a baseline to check whether the transformer's cost is justified, and fixes a bug in how the decision threshold was applied.
 
+## The problem, the technique, and why
+
+**Problem:** there isn't a real-world problem to solve here — this is a university project, built on a fixed academic benchmark (a shared task with a public leaderboard). It's closer to research than to product work: an exercise to practice and demonstrate NLP skills, not to answer a business question.
+
+**Technique:** fine-tuning BERTIN (a RoBERTa model pretrained on Spanish) for binary text classification, benchmarked against a TF-IDF + Logistic Regression baseline, with a threshold bug from the original coursework found and fixed.
+
+**Why:** the baseline comparison, the bug fix, and the honesty about the threshold caveat (below) are the parts that turn a one-off coursework notebook into something closer to how this kind of model would actually be validated before anyone trusted it. (Why BERTIN specifically, as opposed to another transformer, is covered further down.)
+
 ## Is the transformer worth it?
 
 BERTIN is a 110M-parameter model that needs a GPU to fine-tune in reasonable time. Before paying that cost, it's worth checking what a much cheaper model can do: TF-IDF features into logistic regression, which trains in seconds on a laptop with no GPU.
