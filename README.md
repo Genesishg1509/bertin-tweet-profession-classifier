@@ -6,7 +6,7 @@ This started as a university NLP exercise. Fine-tuning **BERTIN**, a RoBERTa mod
 
 ## The problem, the technique, and why
 
-**Problem:** there isn't a real-world problem to solve here — this is a university project, built on a fixed academic benchmark (a shared task with a public leaderboard). It's closer to research than to product work: an exercise to practice and demonstrate NLP skills, not to answer a business question.
+**Problem:** there isn't a real-world problem to solve here, this is a university project, built on a fixed academic benchmark (a shared task with a public leaderboard). It's closer to research than to product work: an exercise to practice and demonstrate NLP skills, not to answer a business question.
 
 **Technique:** fine-tuning BERTIN (a RoBERTa model pretrained on Spanish) for binary text classification, benchmarked against a TF-IDF + Logistic Regression baseline, with a threshold bug from the original coursework found and fixed.
 
@@ -27,11 +27,11 @@ The gap is large, 33 points of F1. Unlike cases where a simple baseline nearly m
 
 ## A bug in the original notebook
 
-The original analysis searched for the F1-optimal decision threshold on the validation set (0.42 instead of the default 0.5) — but then generated the final test predictions using the model's raw argmax, which is the same as always using threshold 0.5. The tuned threshold was computed and then never used.
+The original analysis searched for the F1-optimal decision threshold on the validation set (0.42 instead of the default 0.5), but then generated the final test predictions using the model's raw argmax, which is the same as always using threshold 0.5. The tuned threshold was computed and then never used.
 
 `src/evaluate.py` fixes this: `find_best_threshold` tunes it, and `src/predict.py` applies that same threshold when generating the actual submission file.
 
-**An honest caveat about this threshold, stated plainly:** it's tuned on the same ~1,000-example validation set used to report F1. That's optimistic — it's the best threshold *for this validation set*, not a guarantee on new data. A more rigorous setup would tune it on a separate held-out split. This repo doesn't have enough data to afford that split and still leaves the caveat visible rather than hiding it.
+**An honest caveat about this threshold, stated plainly:** it's tuned on the same ~1,000-example validation set used to report F1. That's optimistic: it's the best threshold *for this validation set*, not a guarantee on new data. A more rigorous setup would tune it on a separate held-out split. This repo doesn't have enough data to afford that split and still leaves the caveat visible rather than hiding it.
 
 ## Project structure
 
